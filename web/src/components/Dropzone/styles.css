@@ -44,7 +44,7 @@
 
 .dropzone p {
   width: calc(100% - 10px);
-  height: calc(100% - 10px);
+  height: calc(100% + 20px);
 
   display: flex;
   flex-direction: column;
@@ -56,7 +56,7 @@
 
 .dropzone .icon {
   position: absolute;
-  bottom: 55%;
+  bottom: 52%;
   left: 46%;
   display: flex;
   color: #4ECB79;

@@ -37,15 +37,13 @@ const Dropzone: React.FC<Props> = ({ onFileUploaded }) => {
       <input {...getInputProps()} accept='image/*' />
       {/* se for varios arquivos e so colocar multiple no input */}
       <div className="border">
+      <FiUpload className="icon" />
         { selectedFileUrl
           ? <img src={selectedFileUrl} alt="point thumbanail" />
           : (
             isDragActive 
               ? <p className="drag-here">Arraste Aqui...</p>
-              : <>
-                  <p>Selecione a Imagem...</p>
-                  <FiUpload className="icon" />
-                </>
+              : <p>Selecione a Imagem...</p>
           )
           // Se tiver selectedFileUrl ele vai colocar a img, se não ele vai colocar um text.
         }
