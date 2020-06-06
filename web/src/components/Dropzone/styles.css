@@ -1,0 +1,65 @@
+.dropzone {
+  height: 350px;
+  background: #E1FAEC;
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 48px;
+  outline: 0;
+}
+
+.dropzone img {
+  transform: scale(1.01);
+  width: calc(100%);
+  height: calc(100%); 
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+@keyframes bounce {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.drag-here {
+  animation-name: bounce;
+  animation-duration: 300ms;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+}
+
+.border {
+  width: calc(100% - 60px);
+  height: calc(100% - 60px);
+  border-radius: 10px;
+  border: 1px dashed #4ECB79;
+  position: relative;
+}
+
+.dropzone p {
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgba(51, 51, 51, 0.678);
+
+}
+
+.dropzone .icon {
+  position: absolute;
+  bottom: 55%;
+  left: 46%;
+  display: flex;
+  color: #4ECB79;
+  width: 24px;
+  height: 24px;
+}
