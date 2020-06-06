@@ -25,10 +25,17 @@
 
 - **#NodeJS**
 - **#React JS**
-- **#React Native** (Projeto no repositoria em breve)
+- **#React Native**
 - **#Express**
 - **#Knex**
 - **#Cors**
+- **#Celebrate**
+- **#React Dropzone**
+- **#React Leaflet**
+- **#Leaflet**
+- **#React Native Emoji**
+- **#Expo Mail Composer**
+- **#React Navigation**
 
 ## :file_cabinet: Databases
 
