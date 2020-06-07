@@ -25,62 +25,76 @@
 
 ## :computer: Languages
 
-- **#Typescript**
+  - **#Typescript**
 
 ## :books: Technologies
 
-- **#NodeJS**
-- **#React JS**
-- **#React Native**
-- **#Express**
-- **#Knex**
-- **#Cors**
-- **#Celebrate**
+  - **#NodeJS**
+  - **#React JS**
+  - **#React Native**
+  - **#Express**
+  - **#Knex**
+  - **#Cors**
+  - **#Celebrate**
 
-- **#React Dropzone**
-- **#React Leaflet**
-- **#Leaflet**
-- **#React Modal**
+  - **#React Dropzone**
+  - **#React Leaflet**
+  - **#Leaflet**
+  - **#React Modal**
 
-- **#Expo**
-- **#React Native Emoji**
-- **#Expo Mail Composer**
-- **#React Navigation**
-- **#Picker Select**
+  - **#Expo**
+  - **#React Native Emoji**
+  - **#Expo Mail Composer**
+  - **#React Navigation**
+  - **#Picker Select**
 
 ## :file_cabinet: Databases
 
-- **#sqlite3**
+  - **#sqlite3**
 
 ## Usage
 
-1. Copy the url from the repository.
+  1. Copy the url from the repository.
 
-2. Open your project and type this command in your terminal:
-```sh
-  git clone https://github.com/alexandredev3/ecoleta-nlw01.git
-```
+  2. Open your project and type this command in your terminal:
+  ```sh
+    git clone https://github.com/alexandredev3/ecoleta-nlw01.git
+  ```
 
-3. Command to turn on the backend server
-```sh
-  yarn dev:server
-    * Server is running on http://localhost:3333/
-```
+  3. Command to turn on the backend server
+  ```sh
+    yarn dev:server
+      * Server is running on http://localhost:3333/
+  ```
 
-4. Command to start ReactJS
-```sh
-  yarn start
-```
-5. Go to http://localhost:3000/
+  4. Command to start ReactJS
+  ```sh
+    yarn start
+  ```
+  5. Go to http://localhost:3000/
 
-6. Have a good time! 😃
-
+  #### how to use the mobile application
+    
+    1. Install the Expo on your device.
+    
+    2. Install the expo cli on your machine
+      ```sh
+        yarn global add expo-cli
+      ```
+     
+    3. Open the ecoleta mobile project and run this code on the terminal.
+    
+      ```sh
+        yarn start
+      ```
+    Have a good time! 😃
+    
 ## Author 
 
 👤 **Alexandre Costa**
 
-* Github: [@alexandredev3](https://github.com/alexandredev3)
-* Linkedin: [@alexandreCosta](https://www.linkedin.com/in/alexandre-costa-401699199/)
+  * Github: [@alexandredev3](https://github.com/alexandredev3)
+  * Linkedin: [@alexandreCosta](https://www.linkedin.com/in/alexandre-costa-401699199/)
 
 ## 📝 License
 
