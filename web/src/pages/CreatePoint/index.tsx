@@ -1,18 +1,20 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { FiArrowLeft } from 'react-icons/fi';
+import { FiArrowLeft, FiCheckCircle } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 // LeafletMouseEvent: e necessario para fazer o marker no mapa.
 import axios from 'axios';
-
-import Dropzone from '../../components/Dropzone';
+import Modal from 'react-modal';
 
 import api from '../../services/api';
+
+import Dropzone from '../../components/Dropzone';
 
 import './styles.css';
 
 import logo from '../../assets/logo.svg';
+
 
 interface Item {
   id: number;
@@ -49,7 +51,9 @@ const CreatePoint = () => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0])
   // number, number primeiro parametro e a latitude e o segundo e a longtute 
-  const [selectedFile, setSelectedFile] = useState<File>(); 
+  const [selectedFile, setSelectedFile] = useState<File>();
+
+  const [modalIsOpen, SetModalIsOpen] = useState(false);
 
   const history = useHistory();
 
@@ -197,11 +201,12 @@ const CreatePoint = () => {
     // points e o caminho que nos usamos la na api para criar um point
     // segundo parametro são os dados que nos temos que usar para criar esse point.
 
-    alert('Ponto de coleta criado com sucesso');
+    SetModalIsOpen(true);
 
-    history.push('/');
-    // Depois do alert ele vai redireciona o usuario para a pagina home
-  }
+    setTimeout(() =>{
+      history.push('/');
+    }, 3000);
+  };
 
   return (
     <div id="page-create-point">
@@ -217,7 +222,17 @@ const CreatePoint = () => {
       <form onSubmit={handleSubmit}>
         <h1>Cadastro do <br /> ponto de coleta</h1>
 
-          <Dropzone onFileUploaded={setSelectedFile} />
+        <Modal 
+          isOpen={modalIsOpen}
+          className="modal"
+        >
+          <div className="icon">
+            <FiCheckCircle size={90} color="#34CB79" />
+            <h1>Cadastro concluído!</h1>
+          </div>
+        </Modal>
+
+        <Dropzone onFileUploaded={setSelectedFile} />
 
         <fieldset>
           <legend>
@@ -266,7 +281,7 @@ const CreatePoint = () => {
               <span>Selecione o endereço no mapa</span>
             </legend>
 
-            <Map center={initialPosition} zoom={12} onClick={handleMapMarker}>
+            <Map className={modalIsOpen ? 'map-hide ' : '' } center={initialPosition} zoom={12} onClick={handleMapMarker}>
               <TileLayer  // E o layout que ele vai usar.
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -345,7 +360,6 @@ const CreatePoint = () => {
             </ul>
 
         </fieldset>
-
         <button type="submit">
           Cadastrar ponto de coleta
         </button>

@@ -201,3 +201,39 @@
   background: #E1FAEC;
   border: 2px solid #34CB79;
 }
+
+.modal {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+
+  border: 0;
+
+  height: 200vh;
+
+  display: flex;
+  justify-content: center;
+
+  background-color: #0E0A14;
+
+  opacity: 0.95;
+}
+
+.modal .icon {
+  margin-top: 19%;
+}
+
+.modal .icon h1 {
+  position: absolute;
+  left: 38%;
+  
+  color: #F0F0F5;
+  font-size: 36px;
+  margin-top: 10px;
+}
+
+.map-hide {
+  visibility: hidden;
+}

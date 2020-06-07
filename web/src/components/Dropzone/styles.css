@@ -27,6 +27,15 @@
   }
 }
 
+@keyframes moveUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+
 .drag-here {
   animation-name: bounce;
   animation-duration: 300ms;
@@ -34,11 +43,19 @@
   animation-direction: alternate-reverse;
 }
 
-.border {
+.border-success {
   width: calc(100% - 60px);
   height: calc(100% - 60px);
   border-radius: 10px;
   border: 1px dashed #4ECB79;
+  position: relative;
+}
+
+.border-error {
+  width: calc(100% - 60px);
+  height: calc(100% - 60px);
+  border-radius: 10px;
+  border: 1px dashed rgb(203, 78, 78);
   position: relative;
 }
 
@@ -50,16 +67,55 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: rgba(51, 51, 51, 0.678);
+  color: #4ECB79;
 
 }
 
-.dropzone .icon {
+.dropzone .sucess-icon {
   position: absolute;
   bottom: 52%;
   left: 46%;
   display: flex;
-  color: #4ECB79;
+  color: rgba(78, 203, 122, 0.966);
   width: 24px;
   height: 24px;
+
+  animation-name: moveUp;
+  animation-duration: 300ms;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+}
+
+.dropzone .sucess-icon-hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.dropzone .err-icon {
+  position: absolute;
+  bottom: 52%;
+  left: 46%;
+  display: flex;
+  color: rgb(203, 78, 78);
+  width: 25px;
+  height: 25px;
+
+  animation-name: moveUp;
+  animation-duration: 300ms;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+}
+
+.dropzone .err-icon-hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dropzone .error {
+  color: rgb(203, 78, 78);
+
+  animation-name: bounce;
+  animation-duration: 300ms;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
 }

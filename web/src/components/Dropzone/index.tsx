@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { FiUpload } from 'react-icons/fi';
+import { FiUpload, FiX } from 'react-icons/fi';
 
 import './styles.css';
 
@@ -26,25 +26,45 @@ const Dropzone: React.FC<Props> = ({ onFileUploaded }) => {
     setSelectedFileUrl(fileUrl);
     onFileUploaded(file);
   }, [onFileUploaded]);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
     onDrop,
     accept: 'image/*' // Ele vai aceita qualquer tipo de image.
     // caso o usuario tire isso do input, na lib continua, acaba envidado isso
   });
+
+  function renderDragMessage() {
+    if (!isDragActive) {
+      return <p className="seccess">Selecione o Arquivo...</p>;
+    };
+
+    if (isDragReject) {
+      return <p className="error">Arquivo não suportado..</p>;
+    };
+
+    return <p className="drag-here">Solte o arquivo Aqui...</p>;
+  };
   
   return (
     <div className="dropzone" {...getRootProps()}>
       <input {...getInputProps()} accept='image/*' />
       {/* se for varios arquivos e so colocar multiple no input */}
-      <div className="border">
-      <FiUpload className="icon" />
+      <div className={isDragReject ? 'border-error' : 'border-success'}>
         { selectedFileUrl
           ? <img src={selectedFileUrl} alt="point thumbanail" />
-          : (
-            isDragActive 
-              ? <p className="drag-here">Arraste Aqui...</p>
-              : <p>Selecione a Imagem...</p>
-          )
+          : <>
+              {renderDragMessage()}
+              <FiUpload 
+                className={
+                  isDragReject ? 'sucess-icon-hide' : 'sucess-icon'
+                } 
+              />
+
+              <FiX 
+                className={
+                  isDragReject ? 'err-icon' : 'err-icon-hide' 
+                }
+              />
+            </>
           // Se tiver selectedFileUrl ele vai colocar a img, se não ele vai colocar um text.
         }
       </div>
@@ -53,3 +73,6 @@ const Dropzone: React.FC<Props> = ({ onFileUploaded }) => {
 }
 
 export default Dropzone;
+
+{/* <FiUpload className="icon" /> */}
+{/* <FiUpload className="icon-animation" /> */}
