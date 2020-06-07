@@ -30,12 +30,17 @@
 - **#Knex**
 - **#Cors**
 - **#Celebrate**
+
 - **#React Dropzone**
 - **#React Leaflet**
 - **#Leaflet**
+- **#React Modal**
+
+- **#Expo**
 - **#React Native Emoji**
 - **#Expo Mail Composer**
 - **#React Navigation**
+- **#Picker Select**
 
 ## :file_cabinet: Databases
 
