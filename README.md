@@ -17,6 +17,12 @@
 
 <p>Next Level Week Edição 1#, A aplicação construída nesse evento foi à <strong>Ecoleta</strong>. O <strong>Ecoleta</strong> e um projeto para fins ecológicos, onde você faz seu marketplace entre empresas ou entidades, que coletam resíduos orgânicos e inorgânicos para as pessoas que precisam descartar.</p>
 
+<h1 align="center">
+  <img src="https://github.com/alexandredev3/ecoleta-nlw01/blob/master/web-design.png" />
+  <img src="https://github.com/alexandredev3/ecoleta-nlw01/blob/master/mobile-design.png" />
+</h1>
+
+
 ## :computer: Languages
 
 - **#Typescript**
