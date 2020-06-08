@@ -57,20 +57,18 @@
     1. Copy the url from the repository.
 
     2. Open your project and type this command in your terminal:
-    ```sh
-      git clone https://github.com/alexandredev3/ecoleta-nlw01.git
-    ```
+    
+      $ git clone https://github.com/alexandredev3/ecoleta-nlw01.git
 
     3. Command to turn on the backend server
-    ```sh
-      yarn dev:server
+    
+      $ yarn dev:server
         * Server is running on http://localhost:3333/
-    ```
 
     4. Command to start ReactJS
-    ```sh
-      yarn start
-    ```
+    
+      $ yarn start
+
     5. Go to http://localhost:3000/
 
   #### how to use the mobile application
@@ -78,15 +76,13 @@
     1. Install the Expo on your device.
     
     2. Install the expo cli on your machine
-      ```sh
-        yarn global add expo-cli
-      ```
+
+      $ yarn global add expo-cli
      
     3. Open the ecoleta mobile project and run this code on the terminal.
     
-      ```sh
-        yarn start
-      ```
+      $ yarn start
+
     Have a good time! 😃
     
 ## Author 
@@ -102,5 +98,5 @@ Copyright © 2020 [Alexandre Costa](https://github.com/alexandredev3).<br />
 This project is [MIT](https://github.com/alexandredev3/ecoleta-nlw01/blob/master/LICENSE.txt) licensed.
 
 <p align="center">
-  <strong> With ❤ </strong> <a target="_blank" href="https://github.com/alexandredev3">Alexandre Costa</a>
+  <strong> With ❤ </strong> <a target="_blank" href="https://github.com/alexandredev3">Alexandre Costa</a>🚀
 </p>
