@@ -58,6 +58,7 @@
 
 #page-create-point form legend h2 {
   font-size: 24px;
+  color: var(--title-color);
 }
 
 #page-create-point form legend span {
@@ -77,11 +78,23 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 24px;
+
+  position: relative;
 }
 
 #page-create-point form .field input[type=text],
 #page-create-point form .field input[type=email],
 #page-create-point form .field input[type=number] {
+  flex: 1;
+  background: rgb(236, 236, 240);
+  border-radius: 8px;
+  border: 0;
+  padding: 16px 24px;
+  font-size: 16px;
+  color: #6C6C80;
+}
+
+#page-create-point form .error-border input[type=number] {
   flex: 1;
   background: rgb(236, 236, 240);
   border-radius: 8px;
@@ -202,38 +215,40 @@
   border: 2px solid #34CB79;
 }
 
-.modal {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  top: 0;
-
-  border: 0;
-
-  height: 200vh;
-
-  display: flex;
-  justify-content: center;
-
-  background-color: #0E0A14;
-
-  opacity: 0.95;
-}
-
-.modal .icon {
-  margin-top: 19%;
-}
-
-.modal .icon h1 {
-  position: absolute;
-  left: 38%;
-  
-  color: #F0F0F5;
-  font-size: 36px;
-  margin-top: 10px;
-}
-
 .map-hide {
   visibility: hidden;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.validation-image-message {
+  text-align: center;
+  margin-top: 10px;
+  color: rgb(203, 52, 52);
+  font-weight: 500;
+  font-size: 18px;
+
+  animation-name: fadeIn;
+  animation-duration: 300ms;
+  animation-delay: 800ms;
+  animation-fill-mode: backwards;
+}
+
+.validation-image {
+  text-align: center;
+  margin-top: 10px;
+  color: rgb(203, 52, 52);
+  font-weight: 500;
+  font-size: 18px;
+
+  animation-name: fadeIn;
+  animation-duration: 300ms;
+  animation-fill-mode: backwards;
 }

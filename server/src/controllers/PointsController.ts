@@ -29,7 +29,7 @@ class PointsController {
     const serializedPoints = points.map(point => {
       return {
         ...point, // eu vou retorna todas as informações do point
-        image_url: `http://192.168.1.4:3333/uploads/${point.image}`
+        image_url: `http://${process.env.IMAGE_URL}/uploads/${point.image}`
       }
     });
     // estou transformando em uma informação acesseiva para o mobile.
@@ -53,7 +53,7 @@ class PointsController {
 
     const serializedPoint = {
       ...point,
-      image_url: `http://192.168.1.4:3333/uploads/${point.image}`
+      image_url: `http://${process.env.IMAGE_URL}/uploads/${point.image}`
     };
     // não estou fazendo o map porque ja retorna um point...s
 

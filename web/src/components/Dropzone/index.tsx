@@ -8,9 +8,11 @@ interface Props {
   onFileUploaded: (file: File) => void;
   // ele recebe uma função.
   // void: quer dizer que ele não tem retorno
+  onImageEmpty: (boolean: Boolean) => void;
+  onValidationErrorMessage: (boolean: Boolean) => void;
 }
 
-const Dropzone: React.FC<Props> = ({ onFileUploaded }) => {
+const Dropzone: React.FC<Props> = ({ onFileUploaded, onImageEmpty, onValidationErrorMessage }) => {
   const [selectedFileUrl, setSelectedFileUrl] = useState('');
   // eu quero colocar um preview da imagem, então estou pegando a url da imagem.
 
@@ -20,12 +22,19 @@ const Dropzone: React.FC<Props> = ({ onFileUploaded }) => {
     const file = acceptedFile[0];
     // como so vai ser um arquivo, ele sempre vai estar na posição 0.
     
-    const fileUrl = URL.createObjectURL(file);
-    // URL: e uma variavel global no javascript.
+    
+    try {
+      const fileUrl = URL.createObjectURL(file);
+      // URL: e uma variavel global no javascript.
+      setSelectedFileUrl(fileUrl);
+      onValidationErrorMessage(false);
+      onFileUploaded(file);
+    } catch {
+      onImageEmpty(false);
+      return onValidationErrorMessage(true);
+    };
 
-    setSelectedFileUrl(fileUrl);
-    onFileUploaded(file);
-  }, [onFileUploaded]);
+  }, [onFileUploaded, onImageEmpty, onValidationErrorMessage]);
   const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
     onDrop,
     accept: 'image/*' // Ele vai aceita qualquer tipo de image.
@@ -36,43 +45,44 @@ const Dropzone: React.FC<Props> = ({ onFileUploaded }) => {
     if (!isDragActive) {
       return <p className="seccess">Selecione o Arquivo...</p>;
     };
-
+    
     if (isDragReject) {
       return <p className="error">Arquivo não suportado..</p>;
     };
-
+    
+    onValidationErrorMessage(false);
+    onImageEmpty(false);
     return <p className="drag-here">Solte o arquivo Aqui...</p>;
   };
   
   return (
-    <div className="dropzone" {...getRootProps()}>
-      <input {...getInputProps()} accept='image/*' />
-      {/* se for varios arquivos e so colocar multiple no input */}
-      <div className={isDragReject ? 'border-error' : 'border-success'}>
-        { selectedFileUrl
-          ? <img src={selectedFileUrl} alt="point thumbanail" />
-          : <>
-              {renderDragMessage()}
-              <FiUpload 
-                className={
-                  isDragReject ? 'sucess-icon-hide' : 'sucess-icon'
-                } 
-              />
+    <>
+      <div className="dropzone" {...getRootProps()}>
+        <input {...getInputProps()} accept='image/*' />
+        {/* se for varios arquivos e so colocar multiple no input */}
+        <div className={isDragReject ? 'border-error' : 'border-success'}>
+          { selectedFileUrl
+            ? <img src={selectedFileUrl} alt="point thumbanail" />
+            : <>
+                {renderDragMessage()}
+                <FiUpload 
+                  className={
+                    isDragReject ? 'sucess-icon-hide' : 'sucess-icon'
+                  } 
+                />
 
-              <FiX 
-                className={
-                  isDragReject ? 'err-icon' : 'err-icon-hide' 
-                }
-              />
-            </>
-          // Se tiver selectedFileUrl ele vai colocar a img, se não ele vai colocar um text.
-        }
+                <FiX 
+                  className={
+                    isDragReject ? 'err-icon' : 'err-icon-hide' 
+                  }
+                />
+              </>
+            // Se tiver selectedFileUrl ele vai colocar a img, se não ele vai colocar um text.
+          }
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
 export default Dropzone;
-
-{/* <FiUpload className="icon" /> */}
-{/* <FiUpload className="icon-animation" /> */}

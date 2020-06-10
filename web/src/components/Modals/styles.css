@@ -1,0 +1,29 @@
+.modal {
+  border: 0;
+  height: 200vh;
+  background-color: #0E0A14;
+  opacity: 0.95;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal .icon-success h1, h2 {
+  color: #FFF;
+
+}
+
+.modal .icon-success {
+  margin-top: 260px;
+}
+
+.modal .icon-error h1 {
+  color: #FFF;
+
+}
+
+.modal .icon-error {
+  margin-top: 230px;
+}
+

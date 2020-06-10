@@ -1,20 +1,21 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { FiArrowLeft, FiCheckCircle } from 'react-icons/fi';
+import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 // LeafletMouseEvent: e necessario para fazer o marker no mapa.
 import axios from 'axios';
-import Modal from 'react-modal';
+import * as yup from 'yup';
+import { Element, Events, scrollSpy, scroller } from 'react-scroll';
 
 import api from '../../services/api';
 
 import Dropzone from '../../components/Dropzone';
+import Modals from '../../components/Modals';
 
 import './styles.css';
 
 import logo from '../../assets/logo.svg';
-
 
 interface Item {
   id: number;
@@ -45,15 +46,19 @@ const CreatePoint = () => {
   })
 
   // Vai armazenar qual uf o usuario selecionou.
-  const [selectedUf, setSelectedUf] = useState('0');
-  const [selectedCity, setSelectedCity] = useState('0');
+  const [selectedUf, setSelectedUf] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
   // Armazenar o id dos Items.
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0])
   // number, number primeiro parametro e a latitude e o segundo e a longtute 
   const [selectedFile, setSelectedFile] = useState<File>();
 
-  const [modalIsOpen, SetModalIsOpen] = useState(false);
+  const [modalIsOpenSuccess, setModalIsOpenSuccess] = useState(false);
+  const [modalIsOpenError, setModalIsOpenError] = useState(false);
+
+  const [imageEmpty, setImageEmpty] = useState<Boolean>();
+  const [messageError, setMessageError] = useState<Boolean>();
 
   const history = useHistory();
 
@@ -96,6 +101,13 @@ const CreatePoint = () => {
       setCities(cityNames);
       })
   }, [selectedUf]);
+
+  useEffect(() => {
+    Events.scrollEvent.register('begin', function(to, element) {
+    });
+
+    scrollSpy.update();
+  }, []);
 
   function handleSelectUf(event: ChangeEvent<HTMLSelectElement>) {
     // Eu preciso informar tambem qual input esta alterando.
@@ -149,6 +161,19 @@ const CreatePoint = () => {
     // setSelectedItems([ ...selectedItems, id ]);
     // tenho que aproveitar tudo que ja tem no selected items, e colocar o id novo.
   };
+ 
+  function handleScrollToDatas() {
+    scroller.scrollTo('scrollToDatas', {
+      duration: 700,
+      smooth: true,
+    });
+  };
+  function handleScrollToImages() {
+    scroller.scrollTo('scrollToImage', {
+      duration: 700,
+      smooth: true,
+    });
+  };
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -169,7 +194,7 @@ const CreatePoint = () => {
     // Nos vamos ter que usar multipartform aqui tambem, por causa da imagem
     const data = new FormData();
     // FormData: e uma variavel global do javascript que permite nos enviar um multipartform
-    
+
     data.append('name', name);
     data.append('email', email);
     data.append('whatsapp', whatsapp);
@@ -182,7 +207,12 @@ const CreatePoint = () => {
     if (selectedFile) {
       // se o selectedFile for preechido...
       data.append('image', selectedFile);
-    };
+    } else {
+      handleScrollToImages();
+      setMessageError(false);
+      return setImageEmpty(true);
+    }
+    
     // o selected por ser undefined o usuario pode dar um submit sem enviar a foto
     // se não fazer esse if, o typescript vai ficar reclamando
 
@@ -196,16 +226,48 @@ const CreatePoint = () => {
     //   longitude,
     //   items
     // };
-    
-    await api.post('points', data);
-    // points e o caminho que nos usamos la na api para criar um point
-    // segundo parametro são os dados que nos temos que usar para criar esse point.
 
-    SetModalIsOpen(true);
+    // yup.setLocale({
+    //   mixed: {
+    //     required: 'Campo Obrigatório'
+    //   }
+    // });
 
-    setTimeout(() =>{
-      history.push('/');
-    }, 3000);
+    const schema = yup.object().shape({
+      name: yup.string().required(),
+      email: yup.string().required().email(),
+      whatsapp: yup.string().required(),
+      city: yup.string().required(),
+      uf: yup.string().max(2).required(),
+      items: yup.number().required()
+    });
+
+    try {
+      await api.post('points', data);
+
+      setModalIsOpenSuccess(true);
+
+      setTimeout(() =>{
+        history.push('/');
+      }, 3000);
+    } catch{
+      schema.validate({
+        name,
+        email,
+        whatsapp,
+        uf,
+        city,
+        items
+      }, {abortEarly: false}).catch(
+        function () {
+          setModalIsOpenError(true)
+          setTimeout(() => {
+            setModalIsOpenError(false);
+            handleScrollToDatas()
+          }, 3000);
+        }
+      );       
+    }
   };
 
   return (
@@ -219,26 +281,39 @@ const CreatePoint = () => {
         </Link>
       </header>
 
+      <Modals
+        isOpenModalSuccess={modalIsOpenSuccess} 
+        isOpenModalError={modalIsOpenError}
+      />
+
       <form onSubmit={handleSubmit}>
+        <Element name="scrollToImage" />
         <h1>Cadastro do <br /> ponto de coleta</h1>
 
-        <Modal 
-          isOpen={modalIsOpen}
-          className="modal"
-        >
-          <div className="icon">
-            <FiCheckCircle size={90} color="#34CB79" />
-            <h1>Cadastro concluído!</h1>
-          </div>
-        </Modal>
+        <Dropzone 
+          onFileUploaded={setSelectedFile} 
+          onImageEmpty={setImageEmpty} 
+          onValidationErrorMessage={setMessageError} 
+        />
 
-        <Dropzone onFileUploaded={setSelectedFile} />
+        <Element name="scrollToDatas" />
+
+        {imageEmpty === true && (
+            <div className="validation-image-message">
+              <p>Por favor, adicione uma imagem <strong>PNG</strong> ou <strong>JPG</strong>, para continuar o cadastro.</p>
+            </div>
+        )}
+
+        {messageError === true && (
+        <div className="validation-image">
+          <p>Arquivo não suportado, apenas fotos em <strong>PNG</strong> ou <strong>JPG</strong>.</p>
+        </div>
+      )}
 
         <fieldset>
           <legend>
             <h2>Dados</h2>
           </legend>
-
           <div className="field">
 
             <label htmlFor="name">Nome da entidade</label>
@@ -281,7 +356,20 @@ const CreatePoint = () => {
               <span>Selecione o endereço no mapa</span>
             </legend>
 
-            <Map className={modalIsOpen ? 'map-hide ' : '' } center={initialPosition} zoom={12} onClick={handleMapMarker}>
+              <Map 
+                className={
+                  modalIsOpenSuccess 
+                  ? 'map-hide' 
+                  : ''
+                  ||
+                  modalIsOpenError
+                  ? 'map-hide'
+                  : ''
+                } 
+                center={initialPosition} 
+                zoom={12} 
+                onClick={handleMapMarker}
+              >
               <TileLayer  // E o layout que ele vai usar.
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -294,7 +382,6 @@ const CreatePoint = () => {
             </Map>
 
             <div className="field-group">
-              
               <div className="field">
                 <label htmlFor="uf">Estado (UF)</label>
                 <select 
@@ -335,7 +422,6 @@ const CreatePoint = () => {
         </fieldset>
 
         <fieldset>
-
             <legend>
               <h2>Ítems de coleta</h2>
               <span>Selecione um ou mais ítens abaixo</span>
@@ -358,7 +444,6 @@ const CreatePoint = () => {
                 );
               })}
             </ul>
-
         </fieldset>
         <button type="submit">
           Cadastrar ponto de coleta
